@@ -1,0 +1,33 @@
+{
+  "name": "@gki/branch-lifetime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "bin": {
+    "branch-lifetime": "bin/main.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "webpack --config webpack.config.js",
+    "watch": "webpack --config webpack.config.js --watch",
+    "build": "webpack"
+  },
+  "keywords": [
+    "cli",
+    "branch-lifetime"
+  ],
+  "author": "Gen Takeda",
+  "license": "ISC",
+  "dependencies": {
+    "simple-git": "^3.14.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.18",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.8.3",
+    "webpack-cli": "^4.10.0"
+  }
+}
