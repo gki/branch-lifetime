@@ -12,8 +12,8 @@ jobs:
         run: |
           echo "${{ toJson(github.event.pull_request) }}"
           echo ${{ toJson(github.event.pull_request.commits) }}
-      - name: "PR commits + 1"
-        run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
+      - name: "PR commits"
+        run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} ))" >> "${GITHUB_ENV}"
       - name: "Checkout PR branch and all PR commits"
         uses: actions/checkout@v3
         with:
@@ -21,10 +21,8 @@ jobs:
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
       - name: get lifetime of this branch
         run: |
-          git fetch --prune --progress --no-recurse-submodules origin ${{ github.event.pull_request.base.ref }}
           git log --format=oneline
-          diff -u <(git rev-list --first-parent test2) <(git rev-list --first-parent origin/main) | sed -ne 's/^ //p'
-          oldest_timestamp=$(git log origin/${{ github.event.pull_request.base.ref }}..${{ github.event.pull_request.head.ref }} --format=%cI --reverse | head -1)
+          oldest_timestamp=$(git log --format=%cI --reverse | head -1)
           now_timestamp=$(date -d now --iso-8601="seconds")
           now_sec=$(date -d now +%s)
           oldest_sec=$(date -d "$oldest_timestamp" +%s)
@@ -37,4 +35,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr comment "${URL}" --body "this branch has lived ${{ env.LIFETIME }} hours."
+        run: gh pr comment "${URL}" --body "The branch for this PR has lived ${{ env.LIFETIME }} hours."
