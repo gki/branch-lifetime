@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [closed]
+    types: [synchronize, edited, closed]
 
 jobs:
   get-branch-lifetime:
