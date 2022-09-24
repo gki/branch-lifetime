@@ -7,7 +7,6 @@ jobs:
     steps:
       - name: "PR commits + 1"
         run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
-
       - name: "Checkout PR branch and all PR commits"
         uses: actions/checkout@v3
         with:
@@ -15,5 +14,7 @@ jobs:
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
       - name: get first commit datetime
         run: |
+          echo "$env.PR_FETCH_DEPTH"
+          echo "$env.PR_FETCH_DEPTH"
           git status
           git log
