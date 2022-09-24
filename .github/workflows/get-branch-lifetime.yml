@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [synchronize, edited, closed]
+    types: [opened, synchronize, edited, closed]
 
 jobs:
   get-branch-lifetime:
@@ -21,7 +21,7 @@ jobs:
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
       - name: get lifetime of this branch
         run: |
-          git log --format=oneline
+          git log --format="%h %cI %s"
           oldest_timestamp=$(git log --format=%cI --reverse | head -1)
           now_timestamp=$(date -d now --iso-8601="seconds")
           now_sec=$(date -d now +%s)
