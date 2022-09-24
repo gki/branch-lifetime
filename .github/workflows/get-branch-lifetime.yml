@@ -18,13 +18,10 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
-      - name: get first commit datetime
+      - name: get lifetime of this branch
         run: |
-          echo "FIRST_COMMIT_DATETIME=$(git log --pretty=format:"%cI" --reverse | head -1)" >> $GITHUB_ENV
-      - name: get lifetime from first commit to now
-        run: |
-          echo ${{ env.FIRST_COMMIT_DATETIME }}
-          d1=$(date -d now +%s)
-          d2=$(date -d "${{ env.FIRST_COMMIT_DATETIME }}" +%s)
-          lifetime=$(((d1 - d2) / 60 / 60 ))
+          oldest_timestamp=$(git log ${{ github.event.pull_request.base.ref }}..${{ github.event.pull_request.head.ref }} --format=%H --reverse | head -1)
+          now_sec==$(date -d now +%s)
+          oldest_sec=$(date -d "${{ env.FIRST_COMMIT_DATETIME }}" +%s)
+          lifetime=$(((now_sec - oldest_sec) / 60 / 60 ))
           echo "$lifetime hours"
