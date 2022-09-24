@@ -20,7 +20,11 @@ jobs:
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
       - name: get first commit datetime
         run: |
-          echo "commits=${{ github.event.pull_request.commits }}"
-          echo "PR_FETCH_DEPTH=${{ env.PR_FETCH_DEPTH }}"
-          git status
-          git log
+          echo ::set-output name=first_commit_datetime::$(git log --pretty=format:"%cI" --reverse | head -1)
+      - name: get lifetime from first commit to now
+        run: |
+          echo ${{ steps.vars.outputs.first_commit_datetime }}
+          d1=$(date -d now +%s)
+          d2=$(date -d "${{ steps.vars.outputs.first_commit_datetime }}" +%s)
+          lifetime=$(((d1 - d2) / 60 / 60 ))
+          echo "$lifetime hours"
