@@ -13,4 +13,4 @@ function fizzbuzz(num: number): string {
 }
 
 // marge commitをリストアップする
-// test
+// test foo bbb
