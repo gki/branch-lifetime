@@ -21,7 +21,7 @@ jobs:
       - name: get lifetime of this branch
         run: |
           oldest_timestamp=$(git log ${{ github.event.pull_request.base.ref }}..${{ github.event.pull_request.head.ref }} --format=%H --reverse | head -1)
-          now_sec==$(date -d now +%s)
+          now_sec=$(date -d now +%s)
           oldest_sec=$(date -d "${{ env.FIRST_COMMIT_DATETIME }}" +%s)
           lifetime=$(((now_sec - oldest_sec) / 60 / 60 ))
           echo "$lifetime hours"
