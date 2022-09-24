@@ -1,0 +1,11 @@
+on:
+  push:
+
+jobs:
+  get-branch-lifetime:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get first commit datetime
+        run: |
+          git status
+          git log
