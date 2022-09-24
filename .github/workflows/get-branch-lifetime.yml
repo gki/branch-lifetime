@@ -8,7 +8,7 @@ jobs:
       - name: "Check event name"
         run: echo "${{ github.event_name }}"
       - name: "Check commits includes event"
-        run: echo "${{ github.event.push.commits }}"
+        run: echo "${{ github.event }}"
       - name: "PR commits + 1"
         run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} + 1 ))" >> "${GITHUB_ENV}"
       - name: "Checkout PR branch and all PR commits"
