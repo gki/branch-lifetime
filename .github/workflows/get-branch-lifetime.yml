@@ -22,7 +22,7 @@ jobs:
         run: |
           git fetch --prune --progress --no-recurse-submodules origin ${{ github.event.pull_request.base.ref }}
           git log --format=oneline
-          oldest_timestamp=$(git log origin/${{ github.event.pull_request.base.ref }}..HEAD --format=%cI --reverse | head -1)
+          oldest_timestamp=$(git log origin/${{ github.event.pull_request.base.ref }}..$${{ github.event.pull_request.head.ref }} --format=%cI --reverse | head -1)
           now_timestamp=$(date -d now --iso-8601="seconds")
           now_sec=$(date -d now +%s)
           oldest_sec=$(date -d "$oldest_timestamp" +%s)
