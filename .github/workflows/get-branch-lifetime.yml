@@ -30,3 +30,9 @@ jobs:
           echo "now:      $now_timestamp"
           echo "branched: $oldest_timestamp"
           echo "$lifetime hours"
+          echo "LIFETIME=$lifetime" >> "${GITHUB_ENV}"
+      - name: Post comments
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ github.event.pull_request.html_url }}
+        run: gh pr comment "${URL}" --body "this branch has lived ${{ env.LIFETIME }} hours."
