@@ -10,7 +10,7 @@ jobs:
         run: echo "${{ github.event_name }}"
       - name: "Check json includes event"
         run: |
-          echo "${{ toJson(github.event) }}"
+          echo "${{ toJson(github.event.pull_request) }}"
           echo ${{ toJson(github.event.pull_request.commits) }}
           echo ${{ toJson(github.event.pull_request.commits[0]) }}
       - name: "PR commits + 1"
