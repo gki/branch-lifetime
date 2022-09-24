@@ -20,6 +20,7 @@ jobs:
           fetch-depth: ${{ env.PR_FETCH_DEPTH }}
       - name: get lifetime of this branch
         run: |
+          git merge-base --fork-point refs/remotes/origin/main
           git log --format=oneline
           oldest_timestamp=$(git log ${{ github.event.pull_request.base.ref }}..HEAD --format=%H --reverse | head -1)
           now_timestamp=$(date -d now)
