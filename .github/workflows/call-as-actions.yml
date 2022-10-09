@@ -3,7 +3,7 @@ on:
     types: [opened, synchronize, edited, closed]
 
 jobs:
-  get-branch-lifetime:
+  call-as-actions:
     runs-on: ubuntu-latest
     steps:
       - name: "Check event name"
