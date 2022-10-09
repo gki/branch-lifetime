@@ -50,7 +50,7 @@ runs:
         echo "0-4";
         echo $HOGE
         echo "1";
-        oldest_timestamp=`git log --format=%cI --reverse | head -1`;
+        oldest_timestamp=$(echo `git log --format=%cI --reverse | head -1`)
         echo "2";
         now_timestamp=$(date -d now --iso-8601="seconds");
         echo "3"
