@@ -33,6 +33,8 @@ runs:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: ${{ env.PR_FETCH_DEPTH }}
     - name: "[Debug] git log"
+      if: ${{ github.event_name == 'pull_request'}}
+      shell: bash
       run: |
         git log --format="%h %cI %s"
     - name: get lifetime of this branch
