@@ -6,8 +6,9 @@ jobs:
   call-as-actions:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: "Check event name"
         id: branch-lifetime
         uses: gki/branch-lifetime@v0.0.1
       - name: "Confirm output"
-        run: echo "branch-lifetime output -> ${{ steps.branch-lifetime.outputs.test_output }}"
+        run: echo "branch-lifetime output >> ${{ steps.branch-lifetime.outputs.test_output }}"
