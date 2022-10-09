@@ -11,7 +11,7 @@ jobs:
       - name: "Check json includes event"
         run: |
           echo "${{ toJson(github.event.pull_request) }}"
-          echo ${{ toJson(github.event.pull_request.commits) }}
+          echo "${{ toJson(github.event.pull_request.commits) }}"
       - name: "PR commits"
         run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} ))" >> "${GITHUB_ENV}"
       - name: "Checkout PR branch and all PR commits"

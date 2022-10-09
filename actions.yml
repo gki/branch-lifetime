@@ -22,7 +22,7 @@ runs:
         shell: bash
         run: |
           echo "${{ toJson(github.event.pull_request) }}"
-          echo ${{ toJson(github.event.pull_request.commits) }}
+          echo "${{ toJson(github.event.pull_request.commits) }}"
       - name: "PR commits"
         if: ${{ github.event_name == 'pull_request'}}
         shell: bash
