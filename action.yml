@@ -44,11 +44,11 @@ runs:
         echo "0-1";
         git log --format=%cI --reverse;
         echo "0-2";
-        git log --format=%cI --reverse | head -1;
+        echo `git log --format=%cI --reverse | head -1`;
         echo "0-3";
-        test=$(git log --format=%cI --reverse | head -1)`
+        HOGE=$(git log --format=%cI --reverse | head -1)`
         echo "0-4";
-        echo $test
+        echo $HOGE
         echo "1";
         oldest_timestamp=`git log --format=%cI --reverse | head -1`;
         echo "2";
