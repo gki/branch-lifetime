@@ -8,6 +8,7 @@ inputs:
 outputs:
   test-output:
     description: "test output"
+    value: ${{ steps.branch-lifetime.outputs.lifetime }}
 runs:
   using: "composite"
   steps:
@@ -48,10 +49,11 @@ runs:
           echo "$lifetime hours"
           echo "LIFETIME=$lifetime" >> "${GITHUB_ENV}"
       - name: Output result
+        id: branch-lifetime
         if: ${{ github.event_name == 'pull_request'}}
         shell: bash
         # env:
         #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #   URL: ${{ github.event.pull_request.html_url }}
         # run: gh pr comment "${URL}" --body "The branch for this PR has lived ${{ env.LIFETIME }} hours."
-        run: echo "::set-output name=test-output::$(echo $env.LIFETIME)"
+        run: echo "::set-output name=lifetime::$(echo \"The branch for this PR has lived ${{ env.LIFETIME }} hours.\")"
