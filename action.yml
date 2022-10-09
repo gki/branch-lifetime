@@ -46,7 +46,7 @@ runs:
         echo "0-2";
         echo `git log --format=%cI --reverse | head -1`;
         echo "0-3";
-        HOGE=$(git log --format=%cI --reverse | head -1)`
+        HOGE=$(echo `git log --format=%cI --reverse | head -1`)
         echo "0-4";
         echo $HOGE
         echo "1";
