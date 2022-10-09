@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: "Call local-action"
         id: branch-lifetime
-        uses: ./../../branch-lifetime
+        uses: ./.github/..
         # uses: gki/branch-lifetime@v0.0.2
       - name: "Confirm output"
         run: echo "branch-lifetime output >> ${{ steps.branch-lifetime.outputs.test_output }}"
