@@ -40,13 +40,9 @@ runs:
         git log --format="%h %cI %s"
         echo "---1---"
         oldest_timestamp=$(git log --format=%cI --reverse | head -1)
-        echo "---2---"
         now_timestamp=$(date -d now --iso-8601="seconds")
-        echo "---3---"
         now_sec=$(date -d now +%s)
-        echo "---4---"
         oldest_sec=$(date -d "$oldest_timestamp" +%s)
-        echo "---5---"
         lifetime=$(((now_sec - oldest_sec) / 60 / 60 ))
         echo "---6---"
         echo "now:      $now_timestamp"
