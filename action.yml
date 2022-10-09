@@ -40,26 +40,13 @@ runs:
     - name: get lifetime of this branch
       if: ${{ github.event_name == 'pull_request'}}
       shell: bash
+      # NOTE: head -1を使う場合はechoを挟まないとexit code 141でエラーになる
       run: |
-        echo "0-1";
-        git log --format=%cI --reverse;
-        echo "0-2";
-        echo `git log --format=%cI --reverse | head -1`;
-        echo "0-3";
-        HOGE=$(echo `git log --format=%cI --reverse | head -1`)
-        echo "0-4";
-        echo $HOGE
-        echo "1";
         oldest_timestamp=$(echo `git log --format=%cI --reverse | head -1`)
-        echo "2";
-        now_timestamp=$(date -d now --iso-8601="seconds");
-        echo "3"
+        now_timestamp=$(date -d now --iso-8601="seconds")
         now_sec=$(date -d now +%s)
-        echo "4"
         oldest_sec=$(date -d "$oldest_timestamp" +%s)
-        echo "5"
         lifetime=$(((now_sec - oldest_sec) / 60 / 60 ))
-        echo "6"
         echo "now:      $now_timestamp"
         echo "branched: $oldest_timestamp"
         echo "$lifetime hours"
