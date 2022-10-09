@@ -45,6 +45,10 @@ runs:
         git log --format=%cI --reverse;
         echo "0-2";
         git log --format=%cI --reverse | head -1;
+        echo "0-3";
+        test=`git log --format=%cI --reverse | head -1`
+        echo "0-4";
+        echo $test
         echo "1";
         oldest_timestamp=`git log --format=%cI --reverse | head -1`;
         echo "2";
