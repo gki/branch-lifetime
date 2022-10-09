@@ -46,7 +46,7 @@ runs:
         echo "0-2"
         git log --format=%cI --reverse | head -1
         echo "1"
-        oldest_timestamp=$(git log --format=%cI --reverse | head -1)
+        oldest_timestamp=`git log --format=%cI --reverse | head -1`
         echo "2"
         now_timestamp=$(date -d now --iso-8601="seconds")
         echo "3"
