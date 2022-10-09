@@ -13,4 +13,5 @@ jobs:
         # uses: gki/branch-lifetime@v0.0.2
       - name: "Confirm output"
         run: |
+          echo "${{ toJson(steps.branch-lifetime.outputs) }}"
           echo "branch-lifetime output >> ${{ steps.branch-lifetime.outputs.test_output }}"
