@@ -28,7 +28,6 @@ runs:
       run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} ))" >> "${GITHUB_ENV}"
     - name: "Checkout PR branch and all PR commits"
       if: ${{ github.event_name == 'pull_request'}}
-      shell: bash
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.ref }}
