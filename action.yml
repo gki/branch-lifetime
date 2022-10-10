@@ -20,9 +20,12 @@ runs:
   using: "composite"
   steps:
     - name: "Check event name"
-      if: ${{ github.event_name == 'pull_request'}}
       shell: bash
-      run: echo "${{ github.event_name }}"
+      run: |
+        if [[ github.event_name == 'pull_request' ]]; then
+          echo "WARNING: Skip calculation since this action is for pull_request event."
+          echo "WARNING: Current event name: ${{ github.event_name }}"
+        fi
     - name: "Checkout PR branch and all PR commits"
       if: ${{ github.event_name == 'pull_request'}}
       uses: actions/checkout@v3
