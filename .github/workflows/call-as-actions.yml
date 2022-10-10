@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: "Call local-action"
+      - name: "Call local-action default"
         id: branch-lifetime-default
         uses: ./.github/..
       - name: "Confirm output"
         run: |
           echo "${{ toJson(steps.branch-lifetime-default.outputs) }}"
       - uses: actions/checkout@v3
-      - name: "Call local-action"
+      - name: "Call local-action hour"
         id: branch-lifetime-hour
         uses: ./.github/..
         with:
