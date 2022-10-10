@@ -8,10 +8,27 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Call local-action"
-        id: branch-lifetime
+        id: branch-lifetime-hour
         uses: ./.github/..
         # uses: gki/branch-lifetime@v0.0.2
       - name: "Confirm output"
         run: |
-          echo "${{ toJson(steps.branch-lifetime.outputs) }}"
-          echo "branch-lifetime output >> ${{ steps.branch-lifetime.outputs.test-output }}"
+          echo "${{ toJson(steps.branch-lifetime-hour.outputs) }}"
+      - name: "Call local-action minute"
+        id: branch-lifetime-minute
+        uses: ./.github/..
+        with:
+          unit: minute
+        # uses: gki/branch-lifetime@v0.0.2
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-minute.outputs) }}"
+      - name: "Call local-action second"
+        id: branch-lifetime-second
+        uses: ./.github/..
+        with:
+          unit: second
+        # uses: gki/branch-lifetime@v0.0.2
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-second.outputs) }}"
