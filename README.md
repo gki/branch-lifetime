@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: gki/branch-lifetime@v0.0.3
+      - uses: gki/branch-lifetime@v1
         id: lifetime
         with:
           # You can set 'hour' or 'minute' as well. Default is 'hour'.
