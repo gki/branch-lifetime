@@ -22,7 +22,7 @@ runs:
     - name: "Check event name"
       shell: bash
       run: |
-        if [[ ${{ github.event_name }} == 'pull_request' ]]; then
+        if [[ ${{ github.event_name }} != 'pull_request' ]]; then
           echo "::warning ::Skip calculation since this action is for pull_request event. Current event name: ${{ github.event_name }}"
         fi
     - name: "Checkout PR branch and all PR commits"
