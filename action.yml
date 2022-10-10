@@ -33,7 +33,7 @@ runs:
       with:
         ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: ${{ env.PR_FETCH_DEPTH }}
-    - name: "[Debug] git log"
+    - name: "Git log"
       if: ${{ github.event_name == 'pull_request'}}
       shell: bash
       run: |
