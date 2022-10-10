@@ -1,14 +1,40 @@
 on:
   pull_request:
-    types: [opened, synchronize, edited, closed]
+    types: [opened, synchronize, closed]
 
 jobs:
   call-as-actions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: "Check event name"
-        id: branch-lifetime
-        uses: gki/branch-lifetime@v0.0.2
+      - name: "Call local-action default"
+        id: branch-lifetime-default
+        uses: ./.github/..
       - name: "Confirm output"
-        run: echo "branch-lifetime output > ${{ steps.branch-lifetime.outputs.test_output }}"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-default.outputs) }}"
+      - uses: actions/checkout@v3
+      - name: "Call local-action hour"
+        id: branch-lifetime-hour
+        uses: ./.github/..
+        with:
+          unit: hour
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-hour.outputs) }}"
+      - name: "Call local-action minute"
+        id: branch-lifetime-minute
+        uses: ./.github/..
+        with:
+          unit: minute
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-minute.outputs) }}"
+      - name: "Call local-action second"
+        id: branch-lifetime-second
+        uses: ./.github/..
+        with:
+          unit: second
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-second.outputs) }}"

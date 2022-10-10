@@ -1,14 +1,21 @@
 name: "branch-lifetime"
-description: "Output the branch lifetime for the pull request"
+description: "Output the branch lifetime for this pull request."
 inputs:
-  test-inputs:
-    description: "test input"
+  unit:
+    description: "Unit for output. set hour, minute or second"
     required: true
-    default: "foo"
+    default: "hour"
+    options:
+      - hour
+      - minute
+      - second
 outputs:
-  test-output:
-    description: "test output"
+  lifetime:
+    description: "Life time of the branch of this pull request."
     value: ${{ steps.branch-lifetime.outputs.lifetime }}
+  unit:
+    description: "Unit of the life time. Same value of input 'unit'"
+    value: ${{ steps.branch-lifetime.outputs.unit }}
 runs:
   using: "composite"
   steps:
@@ -16,43 +23,43 @@ runs:
       if: ${{ github.event_name == 'pull_request'}}
       shell: bash
       run: echo "${{ github.event_name }}"
-    - name: "Check json includes event"
-      if: ${{ github.event_name == 'pull_request'}}
-      shell: bash
-      run: |
-        echo "${{ toJson(github.event.pull_request) }}"
-        echo "${{ toJson(github.event.pull_request.commits) }}"
-    - name: "PR commits"
-      if: ${{ github.event_name == 'pull_request'}}
-      shell: bash
-      run: echo "PR_FETCH_DEPTH=$(( ${{ github.event.pull_request.commits }} ))" >> "${GITHUB_ENV}"
     - name: "Checkout PR branch and all PR commits"
       if: ${{ github.event_name == 'pull_request'}}
-      shell: bash
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.pull_request.head.ref }}
-        fetch-depth: ${{ env.PR_FETCH_DEPTH }}
-    - name: get lifetime of this branch
+        fetch-depth: ${{ github.event.pull_request.commits }}
+    - name: "Git log"
       if: ${{ github.event_name == 'pull_request'}}
       shell: bash
       run: |
         git log --format="%h %cI %s"
-        oldest_timestamp=$(git log --format=%cI --reverse | head -1)
+    - name: get lifetime of this branch
+      if: ${{ github.event_name == 'pull_request'}}
+      shell: bash
+      # NOTE: head -1を使う場合はechoを挟まないとexit code 141でエラーになる
+      run: |
+        oldest_timestamp=$(echo `git log --format=%cI --reverse | head -1`)
         now_timestamp=$(date -d now --iso-8601="seconds")
         now_sec=$(date -d now +%s)
+        hour_scale=60
+        minute_scale=60
+        if [[ ${{ inputs.unit }} == "second" ]]; then
+          hour_scale=1
+          minute_scale=1
+        elif [[ ${{ inputs.unit }} == "minute" ]]; then
+          hour_scale=1
+        fi
         oldest_sec=$(date -d "$oldest_timestamp" +%s)
-        lifetime=$(((now_sec - oldest_sec) / 60 / 60 ))
+        lifetime=$(((now_sec - oldest_sec) / $hour_scale / $minute_scale ))
         echo "now:      $now_timestamp"
         echo "branched: $oldest_timestamp"
-        echo "$lifetime hours"
+        echo "$lifetime ${{ inputs.unit }}"
         echo "LIFETIME=$lifetime" >> "${GITHUB_ENV}"
     - name: Output result
       id: branch-lifetime
       if: ${{ github.event_name == 'pull_request'}}
       shell: bash
-      # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   URL: ${{ github.event.pull_request.html_url }}
-      # run: gh pr comment "${URL}" --body "The branch for this PR has lived ${{ env.LIFETIME }} hours."
-      run: echo "::set-output name=lifetime::$(echo \"The branch for this PR has lived ${{ env.LIFETIME }} hours.\")"
+      run: |
+        echo "::set-output name=lifetime::${{ env.LIFETIME }}"
+        echo "::set-output name=unit::${{ inputs.unit }}"
