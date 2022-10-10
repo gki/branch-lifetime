@@ -15,7 +15,7 @@ outputs:
     value: ${{ steps.branch-lifetime.outputs.lifetime }}
   unit:
     description: "Unit of the life time. Same value of input 'unit'"
-    value: ${{ steps.branch-lifetime.outputs.lifetime }}
+    value: ${{ steps.branch-lifetime.outputs.unit }}
 runs:
   using: "composite"
   steps:
