@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened, synchronize, edited, closed]
+    types: [opened, synchronize, closed]
 
 jobs:
   call-as-actions:
