@@ -14,8 +14,8 @@ If this action is triggered by events except `pull_request`, all calculation wil
 ```yml
 on:
   pull_request:
-    # if you want to check lifetime at only closing PR, remove 'synchronize'.
-    types: [synchronize, closed]
+    # if you want to check lifetime at only closing PR, remove 'opened' and 'synchronize'.
+    types: [opened, synchronize, closed]
 
 jobs:
   call-as-actions:
