@@ -8,9 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: "Call local-action"
+        id: branch-lifetime-default
+        uses: ./.github/..
+      - name: "Confirm output"
+        run: |
+          echo "${{ toJson(steps.branch-lifetime-default.outputs) }}"
+      - uses: actions/checkout@v3
+      - name: "Call local-action"
         id: branch-lifetime-hour
         uses: ./.github/..
-        # uses: gki/branch-lifetime@v0.0.2
+        with:
+          unit: hour
       - name: "Confirm output"
         run: |
           echo "${{ toJson(steps.branch-lifetime-hour.outputs) }}"
@@ -19,7 +27,6 @@ jobs:
         uses: ./.github/..
         with:
           unit: minute
-        # uses: gki/branch-lifetime@v0.0.2
       - name: "Confirm output"
         run: |
           echo "${{ toJson(steps.branch-lifetime-minute.outputs) }}"
@@ -28,7 +35,6 @@ jobs:
         uses: ./.github/..
         with:
           unit: second
-        # uses: gki/branch-lifetime@v0.0.2
       - name: "Confirm output"
         run: |
           echo "${{ toJson(steps.branch-lifetime-second.outputs) }}"
