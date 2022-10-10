@@ -22,7 +22,7 @@ runs:
     - name: "Check event name"
       shell: bash
       run: |
-        if [[ github.event_name == 'pull_request' ]]; then
+        if [[ ${{ github.event_name }} == 'pull_request' ]]; then
           echo "WARNING: Skip calculation since this action is for pull_request event."
           echo "WARNING: Current event name: ${{ github.event_name }}"
         fi
