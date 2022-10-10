@@ -1,5 +1,8 @@
 name: "branch-lifetime"
 description: "Output the branch lifetime for this pull request."
+branding:
+  icon: git-pull-request
+  color: green
 inputs:
   unit:
     description: "Unit for output. set hour, minute or second"
