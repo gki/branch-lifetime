@@ -29,7 +29,7 @@ runs:
       if: ${{ github.event_name == 'pull_request'}}
       uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.pull_request.head.ref }}
+        # ref: ${{ github.event.pull_request.head.ref }}
         fetch-depth: ${{ github.event.pull_request.commits }}
     - name: "Git log"
       if: ${{ github.event_name == 'pull_request'}}
