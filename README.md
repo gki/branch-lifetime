@@ -5,6 +5,10 @@
 This action calculates a lifetime of the branch of the pull request.
 You can specify the unit of the action output from `hour`(default), `minute` or `second`.
 
+## Note
+
+If this action is triggered by events except `pull_request`, all calculation will be skipped and outputs will be empty.
+
 ## Setup
 
 ```yml
